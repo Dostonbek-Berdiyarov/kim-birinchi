@@ -8,44 +8,28 @@ var manSpeed = 3.6,
   bikeSpeed = 20.1,
   carSpeed = 70,
   planeSpeed = 800;
-var manInHour = null,
-  bikeInHour = null,
-  carInHour = null,
-  planeInHour = null,
-  manInMinut = null,
-  bikeInMinut = null,
-  carInMinut = null,
-  planeInMinut = null;
 
 elForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   if (+elInput.value <= 0) {
     alert("0 dan katta son kiriting");
   } else {
-    manInHour = Math.floor(+elInput.value / manSpeed);
-    bikeInHour = Math.floor(+elInput.value / bikeSpeed);
-    carInHour = Math.floor(+elInput.value / carSpeed);
-    planeInHour = Math.floor(+elInput.value / planeSpeed);
-    manInMinut = Math.round(
-      (+elInput.value / manSpeed - Math.floor(manInHour)) * 60
-    );
-    bikeInMinut = Math.round(
-      (+elInput.value / bikeSpeed - Math.floor(bikeInHour)) * 60
-    );
-    carInMinut = Math.round(
-      (+elInput.value / carSpeed - Math.floor(carInHour)) * 60
-    );
-    planeInMinut = Math.round(
-      (+elInput.value / planeSpeed - Math.floor(planeInHour)) * 60
-    );
+    function hour(speed) {
+      return Math.floor(+elInput.value / speed);
+    }
+    function minut(speedInMinut, firstSpeed) {
+      return Math.round(
+        (+elInput.value / speedInMinut - Math.floor(hour(firstSpeed))) * 60
+      );
+    }
 
-    elOutputOne.textContent = `${manInHour} soat 
-    ${manInMinut} minut`;
-    elOutputTwo.textContent = `${bikeInHour} soat 
-    ${bikeInMinut} minut`;
-    elOutputThree.textContent = `${carInHour} soat 
-    ${carInMinut} minut`;
-    elOutputFour.textContent = `${planeInHour} soat 
-    ${planeInMinut} minut`;
+    elOutputOne.textContent = `${hour(manSpeed)} soat 
+    ${minut(manSpeed, manSpeed)} minut`;
+    elOutputTwo.textContent = `${hour(bikeSpeed)} soat 
+    ${minut(bikeSpeed, bikeSpeed)} minut`;
+    elOutputThree.textContent = `${hour(carSpeed)} soat 
+    ${minut(carSpeed, carSpeed)} minut`;
+    elOutputFour.textContent = `${hour(planeSpeed)} soat 
+    ${minut(planeSpeed, planeSpeed)} minut`;
   }
 });
